@@ -1,0 +1,55 @@
+﻿@model VehiculoViewModel
+
+@{
+    var titulares = Model.Titulares.Select(m => new SelectListItem
+            {
+                Text = $"{m.First_Name} {m.Last_Name}",
+                Value = m.Id.ToString()
+            });
+}
+
+@using (Html.BeginForm("GuardarVehiculo", "Vehiculos", FormMethod.Post, new { @class = "card p-3 mt-3 mx-auto w-50", @style="background-color: #cfe2ff;", role = "form", id = "guardar" }))
+{
+    @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            @Html.ValidationSummary(true, "Errores: ", new { @class = "text-danger" })
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.Marca, new { @class = "form-label col-md-12"})
+            @Html.TextBoxFor(m => m.Marca, new { @class = "form-control col-md-12"})
+            @Html.ValidationMessageFor(m => m.Marca, "", new { @class = "text-danger mb-2"})
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.Modelo, new { @class = "form-label col-md-12"})
+            @Html.TextBoxFor(m => m.Modelo, new { @class = "form-control col-md-12"})
+            @Html.ValidationMessageFor(m => m.Modelo, "", new { @class = "text-danger mb-2"})
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.Patente, new { @class = "form-label col-md-12"})
+            @Html.TextBoxFor(m => m.Patente, new { @class = "form-control col-md-12"})
+            @Html.ValidationMessageFor(m => m.Patente, "", new { @class = "text-danger mb-2"})
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(m => m.Puertas, new { @class = "form-label col-md-12"})
+            @Html.TextBoxFor(m => m.Puertas, new { @class = "form-control col-md-12", @type="number"})
+            @Html.ValidationMessageFor(m => m.Puertas, "", new { @class = "text-danger mb-2"})
+        </div>
+
+        <div class="col-md-12">
+            @Html.LabelFor(m => m.Id_Titular, new { @class = "form-label col-md-12"})
+            @Html.DropDownListFor(x => x.Id_Titular, (IEnumerable<SelectListItem>)titulares, new { @class="form-control" })
+            @Html.ValidationMessageFor(m => m.Id_Titular, "", new { @class = "text-danger mb-2"})
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <button type="button" class="btn btn-danger" onclick="window.location.href = '@Url.Action("Index","Vehiculos")'">Volver</button>
+    </div>
+}

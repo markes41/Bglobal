@@ -1,0 +1,56 @@
+﻿@model IList<VehiculoViewModel>
+
+@{
+    ViewBag.Title = "Home - Vehículos";
+}
+
+@section Scripts{
+    <script>
+        window.Vehiculos = $.extend(window.Vehiculos, {});
+
+        Vehiculos.Urls = {
+            'urlAgregarPartial': '@Url.Action("AgregarVehiculoPartial", "Vehiculos")',
+        }
+    </script>
+    <script src="~/js/Sitio/Vehiculos.js"></script>
+}
+
+<main>
+    <section id="listado-vehiculos" class="mx-auto w-75 pt-2">
+        <div class="card mt-2 mb-2">
+            <div class="card-body p-1">
+                <button type="button" class="btn btn-primary" onclick="window.location.href = '@Url.Action("AgregarVehiculo","Vehiculos")'">Agregar</button>
+            </div>
+        </div>
+
+        <div class="card mt-2">
+            <div class="card-body p-1">
+                <table class="table mt-2">
+                    <thead>
+                        <tr class="table-danger">
+                            <th scope="col">Patente</th>
+                            <th scope="col">Marca</th>
+                            <th scope="col">Modelo</th>
+                            <th scope="col">Puertas</th>
+                            <th scope="col">Titular</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var vehiculo in Model)
+                        {
+                            <tr class="table-success">
+                                <th scope="row">@vehiculo.Patente</th>
+                                <td>@vehiculo.Marca</td>
+                                <td>@vehiculo.Modelo</td>
+                                <td>@vehiculo.Puertas</td>
+                                <td>@vehiculo.Titular.Last_Name, @vehiculo.Titular.First_Name</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="AddPartialView"></section>
+</main>
